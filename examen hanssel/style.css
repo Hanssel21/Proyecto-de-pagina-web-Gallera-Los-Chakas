@@ -1,0 +1,280 @@
+/* GENERAL */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(
+        135deg,
+        #0f0c1b,
+        #241442,
+        #6b114d,
+        #ff0055
+    );
+    background-attachment: fixed;
+    scroll-behavior: smooth;
+}
+
+/* EFECTO DE FONDO */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(0, 242, 254, 0.2) 0%, transparent 25%),
+        radial-gradient(circle at 80% 80%, rgba(255, 0, 128, 0.2) 0%, transparent 25%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* HEADER Y PORTADA */
+header {
+    position: relative;
+    text-align: center;
+    background: #05020c;
+    overflow: hidden;
+}
+
+header img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    display: block;
+}
+
+.header-contenido {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    color: white;
+    text-shadow: 2px 2px 20px rgba(255, 0, 85, 0.8),
+                 -2px -2px 20px rgba(0, 242, 254, 0.8);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 45px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+header h2 {
+    margin: 10px 0 0 0;
+    font-size: 24px;
+    font-weight: normal;
+    color: #00f2fe;
+}
+
+/* MENU */
+nav {
+    background: #180933;
+    text-align: center;
+    padding: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 242, 254, 0.3);
+}
+
+nav a {
+    color: white;
+    margin: 8px;
+    text-decoration: none;
+    border: 2px solid #ff0055;
+    padding: 10px 18px;
+    border-radius: 5px;
+    display: inline-block;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background: #ff0055;
+    color: #fff;
+    box-shadow: 0 0 15px #ff0055;
+    transform: translateY(-2px);
+}
+
+/* CONTENIDO (Adiós al fondo blanco) */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+}
+
+/* Efecto cristal oscuro traslúcido con borde neón sutil */
+.box, .galeria, .contactos {
+    background: rgba(24, 9, 51, 0.75); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.galeria {
+    margin: 20px;
+    border-radius: 15px;
+    padding: 20px; /* Añadido padding para que respire el contenido */
+}
+
+.galeria h2 {
+    color: #00f2fe; /* Título ahora en cian para resaltar sobre el fondo oscuro */
+    margin-bottom: 20px;
+    font-size: 35px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+}
+
+/* TARJETAS */
+.card {
+    width: 320px;
+    height: 350px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    display: inline-block;
+    margin: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    background: #000;
+    border: 1px solid rgba(255, 0, 85, 0.3);
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.card img:hover {
+    transform: scale(1.05);
+}
+
+/* INFORMACION */
+.info {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 12, 27, 0.95);
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: 0.5s;
+    overflow: auto;
+    cursor: pointer;
+}
+
+.info.active {
+    bottom: 0;
+}
+
+.info h3 {
+    text-align: center;
+    color: #00f2fe;
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+}
+
+.info p {
+    font-size: 18px;
+    margin: 12px 0;
+    text-align: center;
+}
+
+/* DESTACADO */
+.destacado {
+    text-align: center;
+    border: 2px solid #00f2fe;
+    margin: 20px;
+    padding: 20px;
+    /* Fondo oscuro eléctrico semi-transparente */
+    background: rgba(0, 242, 254, 0.1);
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+    text-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
+}
+
+/* CONTACTOS */
+.contactos {
+    padding: 40px 20px;
+    text-align: center;
+    margin: 20px;
+    border-radius: 15px;
+}
+
+.contactos h2 {
+    color: #ff0055; /* Título en magenta neón */
+    font-size: 35px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px rgba(255, 0, 85, 0.4);
+}
+
+.contact-box {
+    width: 320px;
+    /* Cajas de contacto tipo tarjeta cyberpunk */
+    background: rgba(20, 10, 35, 0.8);
+    display: inline-block;
+    margin: 15px;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid #ff0055;
+    box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
+    text-align: left;
+}
+
+.contact-box h3 {
+    color: #00f2fe; /* Subtítulos internos en cian */
+    text-align: center;
+    margin-top: 0;
+}
+
+.contact-box p {
+    font-size: 16px;
+    color: #ffffff;
+}
+
+/* FOOTER */
+footer {
+    background: #180933;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    border-top: 3px solid #ff0055;
+    box-shadow: 0 -4px 20px rgba(255, 0, 85, 0.2);
+}
+
+/* RESPONSIVE */
+@media(max-width:768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .card {
+        width: 90%;
+        height: 350px;
+    }
+
+    header h1 {
+        font-size: 28px;
+    }
+
+    header h2 {
+        font-size: 18px;
+    }
+
+    .contact-box {
+        width: 90%;
+    }
+}

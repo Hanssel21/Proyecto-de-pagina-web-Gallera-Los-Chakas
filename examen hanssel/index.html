@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallera Los Chakas</title>
+    <style>
+        /* GENERAL */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(
+                135deg,
+                #0f0c1b,
+                #241442,
+                #6b114d,
+                #ff0055
+            );
+            background-attachment: fixed;
+        }
+
+        /* HEADER Y PORTADA (TEXTO ADENTRO DE LA FOTO) */
+        header {
+            position: relative; 
+            text-align: center;
+            background: #05020c; 
+            overflow: hidden;
+        }
+
+        header img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .header-contenido {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            color: white;
+            text-shadow: 2px 2px 20px rgba(255, 0, 85, 0.8), -2px -2px 20px rgba(0, 242, 254, 0.8); 
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 45px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header h2 {
+            margin: 10px 0 0 0;
+            font-size: 24px;
+            font-weight: normal;
+            color: #00f2fe; 
+        }
+
+        /* MENU */
+        nav {
+            background: #180933; 
+            text-align: center;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.3);
+        }
+
+        nav a {
+            color: white;
+            margin: 8px;
+            text-decoration: none;
+            border: 2px solid #ff0055; 
+            padding: 10px 18px;
+            border-radius: 5px;
+            display: inline-block;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover, nav a.active-nav {
+            background: #ff0055;
+            color: white;
+            box-shadow: 0 0 15px #ff0055; 
+            transform: translateY(-2px);
+        }
+
+        /* SISTEMA DE PÁGINAS (Oculta las secciones para el cambio instantáneo) */
+        .container, .galeria, .contactos, .destacado {
+            display: none; /* Ocultas por defecto */
+        }
+
+        /* Esta clase muestra la sección activa de golpe */
+        .active-section {
+            display: flex !important;
+        }
+        section.active-section {
+            display: block !important;
+        }
+        div.destacado.active-section {
+            display: block !important;
+        }
+
+        /* CONTENIDO */
+        .container {
+            flex-wrap: wrap;
+            padding: 15px;
+        }
+
+        .box {
+            margin: 10px;
+            padding: 15px;
+            flex: 1;
+            min-width: 250px;
+            background: rgba(24, 9, 51, 0.75); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            color: white;
+        }
+
+        .box h3 {
+            color: #00f2fe; 
+            text-align: center;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+        }
+
+        /* GALERIA Y SECCIONES */
+        .galeria {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(24, 9, 51, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin: 20px;
+            border-radius: 15px;
+        }
+
+        .galeria h2 {
+            color: #00f2fe;
+            margin-bottom: 20px;
+            font-size: 35px;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+        }
+
+        /* TARJETAS */
+        .card {
+            width: 320px;
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            display: inline-block;
+            margin: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+            background: #000;
+            border: 1px solid rgba(255, 0, 85, 0.3);
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: 0.4s;
+        }
+
+        .card img:hover {
+            transform: scale(1.05);
+        }
+
+        /* INFORMACION */
+        .info {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 12, 27, 0.95);
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: 0.5s;
+            overflow: auto;
+            cursor: pointer;
+        }
+
+        .info.active {
+            bottom: 0;
+        }
+
+        .info h3 {
+            text-align: center;
+            color: #00f2fe;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        .info p {
+            font-size: 18px;
+            margin: 12px 0;
+            text-align: center;
+        }
+
+        /* DESTACADO */
+        .destacado {
+            text-align: center;
+            border: 2px solid #00f2fe;
+            margin: 20px;
+            padding: 15px;
+            background: rgba(0, 242, 254, 0.15);
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+            text-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
+        }
+
+        /* CONTACTOS */
+        .contactos {
+            padding: 40px 20px;
+            text-align: center;
+            background: rgba(24, 9, 51, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin: 20px;
+            border-radius: 15px;
+        }
+
+        .contactos h2 {
+            color: #ff0055; 
+            font-size: 35px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(255, 0, 85, 0.4);
+        }
+
+        .contact-box {
+            width: 320px;
+            background: rgba(20, 10, 35, 0.8);
+            display: inline-block;
+            margin: 15px;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #ff0055;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
+            text-align: left;
+            color: white;
+        }
+
+        .contact-box h3 {
+            color: #00f2fe;
+            text-align: center;
+        }
+
+        .contact-box p {
+            font-size: 16px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #180933;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            border-top: 3px solid #ff0055;
+            box-shadow: 0 -4px 20px rgba(255, 0, 85, 0.2);
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:768px){
+            .container {
+                flex-direction: column;
+            }
+            .card {
+                width: 90%;
+                height: 350px;
+            }
+            header h1 {
+                font-size: 28px;
+            }
+            header h2 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header id="inicio">
+    <img src="portada.jpg" alt="Portada Gallera">
+    <div class="header-contenido">
+        <h1>🐓 Gallera Los Chakas</h1>
+        <h2>Familia Herrera</h2>
+    </div>
+</header>
+
+<nav>
+    <a onclick="cambiarPagina('inicio')" class="active-nav">Inicio</a>
+    <a onclick="cambiarPagina('eventos')">Eventos</a>
+    <a href="#gallos" onclick="cambiarPagina('gallos')">Gallos</a>
+    <a href="#accesorios" onclick="cambiarPagina('accesorios')">Accesorios</a>
+    <a href="#espuelas" onclick="cambiarPagina('espuelas')">Tipo De Espuelas</a>
+    <a href="#alimentacion" onclick="cambiarPagina('alimentacion')">Tipo De Alimentación</a>
+    <a onclick="cambiarPagina('contacto')">Contacto</a>
+</nav>
+
+<div class="container active-section" id="eventos">
+    <div class="box">
+        <h3>Próximas Peleas</h3>
+        <img src="imagen3.jpg" alt="Arena de pelea" style="width:100%; border-radius:10px; margin-bottom:15px;">
+        <p>🔥 Gran torneo este sábado</p>
+        <p>🥇 Más de 60 peleas</p>
+        <p>🌙 Hasta el amanecer</p>
+    </div>
+
+    <div class="box">
+        <h3>Gallos Destacados</h3>
+        <img src="imagen2.jpg" alt="Galería de gallos" style="width:100%; border-radius:10px; margin-bottom:15px;">
+        <p>🐓 El Trueno</p>
+        <p>🐓 Zeus</p>
+        <p>🐓 Titán</p>
+        <p>🐓 Rambo</p>
+        <p>🐓 El Destructor</p>
+        <p>🐓 El Sargento</p>
+        <p>🐓 El Bandido</p>
+    </div>
+
+    <div class="box">
+        <h3>Resultados</h3>
+        <img src="imagen3.jpg" alt="Gallera" style="width:100%; border-radius:10px; margin-bottom:15px;">
+        <p>✅ Victoria reciente</p>
+        <p>🏆 Ganador</p>
+        <p>❌ Perdedor</p>
+        <p>🤝 Empate</p>
+    </div>
+</div>
+
+<section class="galeria" id="gallos">
+    <h2>Galería de Gallos</h2>
+
+    <div class="card">
+        <img src="gallo1.jpg" alt="Gallo 1" onclick="mostrarInfo('info1')">
+        <div class="info" id="info1" onclick="mostrarInfo('info1')">
+            <h3>🐓 El Trueno</h3>
+            <p><b>Edad:</b> 2 años</p>
+            <p><b>Peso:</b> 2.8 kg</p>
+            <p><b>Historial:</b> 15 peleas</p>
+            <p><b>Victorias:</b> 12</p>
+            <p><b>Porcentaje:</b> 80%</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="gallo2.jpg" alt="Gallo 2" onclick="mostrarInfo('info2')">
+        <div class="info" id="info2" onclick="mostrarInfo('info2')">
+            <h3>🐓 Zeus</h3>
+            <p><b>Edad:</b> 3 años</p>
+            <p><b>Peso:</b> 3.1 kg</p>
+            <p><b>Historial:</b> 20 peleas</p>
+            <p><b>Victorias:</b> 17</p>
+            <p><b>Porcentaje:</b> 85%</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="gallo3.jpg" alt="Gallo 3" onclick="mostrarInfo('info3')">
+        <div class="info" id="info3" onclick="mostrarInfo('info3')">
+            <h3>🐓 Titán</h3>
+            <p><b>Edad:</b> 1 año</p>
+            <p><b>Peso:</b> 2.6 kg</p>
+            <p><b>Historial:</b> 10 peleas</p>
+            <p><b>Victorias:</b> 7</p>
+            <p><b>Porcentaje:</b> 70%</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="gallo4.jpg" alt="Gallo 4" onclick="mostrarInfo('info4')">
+        <div class="info" id="info4" onclick="mostrarInfo('info4')">
+            <h3>🐓 Rambo</h3>
+            <p><b>Edad:</b> 4 años</p>
+            <p><b>Peso:</b> 3.3 kg</p>
+            <p><b>Historial:</b> 25 peleas</p>
+            <p><b>Victorias:</b> 18</p>
+            <p><b>Porcentaje:</b> 72%</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="gallo5.jpg" alt="Gallo 5" onclick="mostrarInfo('info5')">
+        <div class="info" id="info5" onclick="mostrarInfo('info5')">
+            <h3>🐓 El Destructor</h3>
+            <p><b>Edad:</b> 2 años</p>
+            <p><b>Peso:</b> 3.0 kg</p>
+            <p><b>Historial:</b> 18 peleas</p>
+            <p><b>Victorias:</b> 16</p>
+            <p><b>Porcentaje:</b> 89%</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="gallo6.jpg" alt="Gallo 6" onclick="mostrarInfo('info6')">
+        <div class="info" id="info6" onclick="mostrarInfo('info6')">
+            <h3>🐓 El Sargento</h3>
+            <p><b>Edad:</b> 5 años</p>
+            <p><b>Peso:</b> 3.5 kg</p>
+            <p><b>Historial:</b> 30 peleas</p>
+            <p><b>Victorias:</b> 24</p>
+            <p><b>Porcentaje:</b> 80%</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="gallo7.jpg" alt="Gallo 7" onclick="mostrarInfo('info7')">
+        <div class="info" id="info7" onclick="mostrarInfo('info7')">
+            <h3>🐓 El Bandido</h3>
+            <p><b>Edad:</b> 3 años</p>
+            <p><b>Peso:</b> 2.9 kg</p>
+            <p><b>Historial:</b> 22 peleas</p>
+            <p><b>Victorias:</b> 19</p>
+            <p><b>Porcentaje:</b> 86%</p>
+        </div>
+    </div>
+</section>
+
+<section class="galeria" id="accesorios">
+    <h2>Accesorios</h2>
+
+    <div class="card">
+        <img src="guantes.jpg" alt="Guantes de práctica" onclick="mostrarInfo('acc1')">
+        <div class="info" id="acc1" onclick="mostrarInfo('acc1')">
+            <h3>Guantes de Práctica</h3>
+            <p>Protección ideal para los entrenamientos y topas diarias.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="gallo de practica.jpg" alt="Gallo de práctica" onclick="mostrarInfo('acc2')">
+        <div class="info" id="acc2" onclick="mostrarInfo('acc2')">
+            <h3>Gallo de Práctica</h3>
+            <p>Accesorio y maniquí de entrenamiento fabricado en cuero para preparación de combate.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="botana.jpg" alt="Botanas de Cuero" onclick="mostrarInfo('acc3')">
+        <div class="info" id="acc3" onclick="mostrarInfo('acc3')">
+            <h3>Botanas de Cuero</h3>
+            <p>Botanas de alta calidad para el correcto ajuste y protección de las espuelas.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="hilo encerado.jpg" alt="Hilo y Parche" onclick="mostrarInfo('acc4')">
+        <div class="info" id="acc4" onclick="mostrarInfo('acc4')">
+            <h3>Hilo y Cubrebanda</h3>
+            <p>Materiales esenciales para el armado firme y seguro de las navajas y espuelas.</p>
+        </div>
+    </div>
+</section>
+
+<section class="galeria" id="espuelas">
+    <h2>Tipo De Espuelas</h2>
+
+    <div class="card">
+        <img src="navaja.jpg" alt="Navaja" onclick="mostrarInfo('esp1')">
+        <div class="info" id="esp1" onclick="mostrarInfo('esp1')">
+            <h3>Navaja</h3>
+            <p>Hoja de corte curvo de alta precisión, afilada para competencia.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="espuelas.jpg" alt="Espuelas" onclick="mostrarInfo('esp2')">
+        <div class="info" id="esp2" onclick="mostrarInfo('esp2')">
+            <h3>Espuelas</h3>
+            <p>Espuelas clásicas de alta resistencia para el combate tradicional.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="navaja grande.jpg" alt="Navaja Grande" onclick="mostrarInfo('esp3')">
+        <div class="info" id="esp3" onclick="mostrarInfo('esp3')">
+            <h3>Navaja Grande</h3>
+            <p>Navajas profesionales de mayor longitud y estructura reforzada.</p>
+        </div>
+    </div>
+</section>
+
+<section class="galeria" id="alimentacion">
+    <h2>Tipo De Alimentación</h2>
+
+    <div class="card">
+        <img src="alimento 1.jpg" alt="Gladiador Desarrollo" onclick="mostrarInfo('al1')">
+        <div class="info" id="al1" onclick="mostrarInfo('al1')">
+            <h3>Gladiador Desarrollo</h3>
+            <p><b>Nutrición Balanceada</b></p>
+            <p>Alimento vitaminado y medicado diseñado para lograr un óptimo desarrollo en pollos.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="alimento 2.jpg" alt="Mezcla de Granos Premium" onclick="mostrarInfo('al2')">
+        <div class="info" id="al2" onclick="mostrarInfo('al2')">
+            <h3>Mezcla Premium</h3>
+            <p><b>Granos Seleccionados</b></p>
+            <p>Variedad de semillas e ingredientes de alta calidad para mantener una digestión y energía estables.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="alimento 3.jpg" alt="Gladiador Combate" onclick="mostrarInfo('al3')">
+        <div class="info" id="al3" onclick="mostrarInfo('al3')">
+            <h3>Gladiador Combate</h3>
+            <p><b>Nutrición de Campeones</b></p>
+            <p>Fórmula de alto rendimiento para gallos de pelea. Aporta fuerza, resistencia y masa muscular firme.</p>
+        </div>
+    </div>
+</section>
+
+<div class="destacado active-section" id="cartel-destacado">
+    🏆 Torneo mensual activo - Inscripciones abiertas
+</div>
+
+<section class="contactos" id="contacto">
+    <h2>📞 Contactos</h2>
+
+    <div class="contact-box">
+        <h3>Hanssel Herrera</h3>
+        <p>📱 WhatsApp: +505 8518-6841</p>
+        <p>📘 Facebook: Gallera Los Chakas</p>
+        <p>📧 Email: loschakas@gmail.com</p>
+    </div>
+
+    <div class="contact-box">
+        <h3>Reservaciones</h3>
+        <p>☎️ Teléfono: +505 8939-6494</p>
+        <p>📍 Nueva Segovia, Nicaragua</p>
+        <p>🕒 Atención: 8:00 AM - 10:00 PM</p>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Gallera Los Chakas - Hanssel Herrera</p>
+    <p>Eventos • Torneos • Tradición</p>
+</footer>
+
+<script>
+function mostrarInfo(id){
+    let info = document.getElementById(id);
+    info.classList.toggle("active");
+}
+
+// Nueva función inteligente para cambiar de "página" instantáneamente sin deslizar
+function cambiarPagina(idSeccion) {
+    // 1. Ocultar todas las secciones utilizables
+    let secciones = document.querySelectorAll('.container, .galeria, .contactos, .destacado');
+    secciones.forEach(sec => {
+        sec.classList.remove('active-section');
+    });
+
+    // 2. Quitar el estilo activo de los botones del menú anterior
+    let botones = document.querySelectorAll('nav a');
+    botones.forEach(btn => {
+        btn.classList.remove('active-nav');
+    });
+
+    // 3. Activar el botón que presionaste
+    event.currentTarget.classList.add('active-nav');
+
+    // 4. Lógica para mostrar las secciones correspondientes en el mismo sitio
+    if (idSeccion === 'inicio' || idSeccion === 'eventos') {
+        document.getElementById('eventos').classList.add('active-section');
+        document.getElementById('cartel-destacado').classList.add('active-section');
+    } else {
+        document.getElementById(idSeccion).classList.add('active-section');
+    }
+
+    // 5. Opcional: Asegura que la vista regrese arriba del menú de inmediato al cambiar la pestaña
+    window.scrollTo(0, document.querySelector('header').offsetHeight);
+}
+</script>
+
+</body>
+</html>

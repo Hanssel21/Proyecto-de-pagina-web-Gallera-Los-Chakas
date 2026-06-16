@@ -1,0 +1,98 @@
+/* FONDO */
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background-image:url("contratapa-2.jpeg");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* CAJA LOGIN */
+.contenedor{
+    width:350px;
+    padding:35px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(10px);
+    border-radius:25px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.5);
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.3);
+}
+
+/* LOGO */
+.logo{
+    width:120px;
+    margin-bottom:10px;
+}
+
+/* TITULO */
+h2{
+    color:white;
+    font-size:42px;
+    margin:10px 0 5px;
+    text-shadow:2px 2px 5px black;
+}
+
+/* SUBTITULO */
+.subtitulo{
+    color:#f5f5f5;
+    margin-bottom:25px;
+    font-size:16px;
+}
+
+/* INPUTS */
+.input-box{
+    position:relative;
+    margin-top:15px;
+}
+
+.input-box input{
+    width:100%;
+    padding:15px 15px 15px 45px;
+    border:none;
+    border-radius:12px;
+    outline:none;
+    background:rgba(255,255,255,0.9);
+    font-size:16px;
+    box-sizing:border-box;
+}
+
+/* ICONOS */
+.input-box i{
+    position:absolute;
+    left:15px;
+    top:15px;
+    font-size:18px;
+    color:#444;
+}
+
+/* BOTON */
+button{
+    width:100%;
+    padding:15px;
+    margin-top:20px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(to right,#b30000,#ff4500);
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+/* MENSAJE */
+#mensaje{
+    margin-top:15px;
+    color:#00ff7f;
+    font-weight:bold;
+}
